@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Obst Gemüse Wein & Co">
+    <meta name="keywords" content="Obst, Gemüse, Wein, Co, Naturgenuss, Burgenland, Naturgenuss Burgenland, Donnerskirchen, Obststand Donnerskirchen, Obststand">
+    <title>Naturgenuss Burgenland</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+         body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f1ea;
+            color: #4a4a4a;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #303246;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .top-bar {
+            font-size: 14px;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px;
+            background: #4a4a4a;
+            border-radius: 30px;
+            margin: 20px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .search-cart {
+            display: flex;
+            align-items: center;
+        }
+        .search-bar {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .search-bar input {
+            padding: 8px 35px 8px 10px;
+            border: none;
+            border-radius: 20px;
+            outline: none;
+            width: 180px;
+        }
+        .search-bar button {
+            position: absolute;
+            right: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: #4a4a4a;
+        }
+        .btn {
+            background: #303246;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        .features {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 50px 0;
+        }
+        .feature-item {
+            background: white;
+            margin: 15px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        .feature-item img {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .slideshow-container {
+            width: 100%;
+            height: 700px;
+            position: relative;
+            overflow: hidden;
+        }
+        .slideshow-family-container{
+            width: 100%;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+        .slideshow-sp-container{
+            width: 100%;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+        .slide, .slide-family, .slide-sp {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            display: none;
+        }
+        .slide h1, .slide h2, .slide-family h3, .slide-family p, .slide-sp h3 {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+            text-align: center;
+        }
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            font-weight: bold;
+            padding: 10px;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            border-radius: 50%;
+        }
+        .prev { left: 20px; }
+        .next { right: 20px; }
+        .imprint {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .imprint h2 {
+            text-align: center;
+            color: #6d8c52;
+        }
+        .imprint p {
+            line-height: 1.6;
+            color: #333;
+        }
+        .imprint strong {
+            color: #4a4a4a;
+        }
+    </style>
+       <script src="assets/js/typed.js"></script>
+       <script>
+        function filterProducts() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let items = document.getElementsByClassName('feature-item');
+            
+            for (let i = 0; i < items.length; i++) {
+                let title = items[i].getElementsByTagName('p')[0].innerText.toLowerCase();
+
+                if (title.includes(input)) {
+                    items[i].style.display = "block";
+                } else {
+                    items[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>        
+        <nav>
+            <div class="logo">Obst, Gemüse, Wein & Co.</div>
+            <ul>
+                <li><a href="#features">Produkte</a></li>
+                <li><a href="#imprint">Kontakt</a></li>
+            </ul>
+            <div class="search-cart">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Suchen..." onkeyup="filterProducts()">
+                    <button>🔍</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="slideshow-container">
+        <div class="slide" style="background-image: url('images/bg.jpg'); display: block;">
+            <h1>Frische Produkte direkt vom Bauern</h1>
+        </div>
+        <div class="slide" style="background-image: url('images/location.jpg');">
+            <h1>Besuche unseren Obststand in Donnerskirchen</h1>
+            <h2>Eisenstädterstraße 19</h2>
+        </div>        
+    </div>
+    <section id="features" class="features">
+        <div class="feature-item">        
+            <img src="images/juice.jpg" alt="Wine">
+            <h3>Weine</h3>
+            <p>Edle Tropfen aus dem Burgenland</p>
+        </div>
+        <div class="feature-item">
+            <img src="images/pepper.jpg" alt="Pepper">
+            <h3>Paprika</h3>
+            <p>Frische und aromatische Paprikasorten</p>
+        </div>
+        <div class="feature-item">
+            <img src="images/garlic.jpg" alt="Garlic">
+            <h3>Frischer Knoblauch</h3>
+            <p>Würziger Knoblauch direkt vom Feld</p>
+        </div>
+        <div class="feature-item">
+            <img src="images/tomatoes.jpg" alt="Tomatoes">
+            <h3>Unsere Stauden</h3>
+            <p>Saftige Paradeiser aus eigenem Anbau</p>
+        </div>
+        <div class="feature-item">
+            <img src="images/honey.jpg" alt="Honey">
+            <h3>Honig</h3>
+            <p>Reiner Honig von fleißigen Bienen</p>
+        </div>
+        <div class="feature-item">
+            <div class="slideshow-family-container">
+                <div class="slide-family" style="background-image: url('images/family.jpg'); display: block;">
+                    <h3>Unser Familienbetrieb</h3> 
+                </div>
+                <div class="slide-family" style="background-image: url('images/tractor.jpg');">
+                    <h3>Unsere Landwirtschaft</h3>
+                </div>        
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="slideshow-sp-container">
+                <div class="slide-sp" style="background-image: url('images/sp1.jpg'); display: block;">
+                    <h3>Heimischer Spargel</h3> 
+                </div>
+                <div class="slide-sp" style="background-image: url('images/sp4.jpg');">
+                    <h3>Frischer Spargel</h3>
+                </div>
+                <div class="slide-sp" style="background-image: url('images/sp2.jpg');">
+                    <h3>Spargel aus der Region</h3>
+                </div> 
+            </div>
+        </div>
+        <div class="feature-item">
+            <img src="images/alcohol.jpg" alt="Alcohol">
+            <h3>Schnaps</h3>
+            <p>Traditioneller Schnaps</p>
+        </div>
+        <div class="feature-item">
+            <img src="images/location.jpg" alt="Location">
+            <h3>Unser Stand</h3>
+            <p>Frische Produkte direkt vor Ort genießen</p>
+        </div>
+        <div class="feature-item">
+            <img src="images/quality.jpg" alt="Quality">
+            <h3>Feinste Qualität</h3>
+            <p>Beste Zutaten für höchste Ansprüche</p>
+        </div>
+    </section>
+    <section id="imprint" class="imprint">
+        <h1>Impressum</h1>
+        <h2>Obst, Gemüse, Wein & Co.</h2>
+        <h2>Eisenstädterstraße 19, 7082 Donnerskirchen</h2>
+        <h2><a href="tel:+436607707763">+43 (0) 660 7707763</a></h2>
+    </section>
+    <script>
+         function startSlideshow(containerClass, slideClass) {
+            let index = 0;
+            function showSlides() {
+                let slides = document.querySelectorAll(`.${containerClass} .${slideClass}`);
+                slides.forEach(slide => slide.style.display = "none");
+                index++;
+                if (index > slides.length) { index = 1; }
+                slides[index - 1].style.display = "block";
+                setTimeout(showSlides, 2500);
+            }
+            showSlides();
+        }
+        
+        startSlideshow("slideshow-container", "slide");
+        startSlideshow("slideshow-family-container", "slide-family");
+        startSlideshow("slideshow-sp-container", "slide-sp");
+    </script>
+</body>
+</html>
