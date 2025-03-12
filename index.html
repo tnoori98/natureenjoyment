@@ -15,13 +15,13 @@
             margin: 0;
             padding: 0;
         }
-        header {
+            header {
             background: #303246;
             color: white;
             padding: 10px 0;
             text-align: center;
         }
-        .top-bar {
+            .top-bar {
             font-size: 14px;
         }
         nav {
@@ -41,6 +41,7 @@
         nav ul {
             list-style: none;
             display: flex;
+            padding: 0;
         }
         nav ul li {
             margin: 0 15px;
@@ -97,46 +98,54 @@
             border-radius: 10px;
             text-align: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 400px;
+            width: 90%;
+            max-width: 400px;
         }
         .feature-item img {
-            width: 300px;
-            height: 200px;
+            width: 100%;
+            height: auto;
             object-fit: cover;
             border-radius: 5px;
         }
-        .slideshow-container {
+        /* .feature-item img {
+            width: 300px;
+            height: 250px; 
+            object-fit: cover; 
+            border-radius: 5px;
+        } */
+        .slideshow-container, .slideshow-wine-container, .slideshow-peach-container,
+        .slideshow-f-container, .slideshow-sp-container, .slideshow-pepper-container {
             width: 100%;
             height: 700px;
             position: relative;
             overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        .slideshow-family-container{
-            width: 100%;
-            height: 300px;
-            position: relative;
-            overflow: hidden;
-        }
-        .slideshow-sp-container{
-            width: 100%;
-            height: 300px;
-            position: relative;
-            overflow: hidden;
-        }
-        .slide, .slide-family, .slide-sp {
+
+        /* Ensure only the relevant slides are controlled */
+        .slide, .slide-wine, .slide-peach, .slide-f, .slide-sp, .slide-pepper {
             position: absolute;
             width: 100%;
             height: 100%;
             background-size: cover;
             background-position: center;
-            display: none;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
         }
-        .slide h1, .slide h2, .slide-family h3, .slide-family p, .slide-sp h3 {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 5px;
-            color: white;
-            text-align: center;
+
+        /* Apply active state only to the individual slide, not the entire container */
+        .slide.active, .slide-wine.active, .slide-peach.active, .slide-f.active, 
+        .slide-sp.active, .slide-pepper.active {
+            opacity: 1;
+        }
+
+        /* Image settings to ensure proper scaling */
+        .slide img, .slide-wine img, .slide-peach img, .slide-f img, .slide-sp img, .slide-pepper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .prev, .next {
             cursor: pointer;
@@ -154,7 +163,7 @@
         .prev { left: 20px; }
         .next { right: 20px; }
         .imprint {
-            max-width: 800px;
+            max-width: 90%;
             margin: 50px auto;
             padding: 20px;
             background: white;
@@ -173,8 +182,34 @@
         .imprint strong {
             color: #4a4a4a;
         }
+        @media screen and (max-width: 768px) {
+        nav {
+            flex-direction: column;
+            text-align: center;
+            padding: 10px;
+        }
+        nav ul {
+            flex-direction: column;
+            padding: 0;
+        }
+        nav ul li {
+            margin: 10px 0;
+        }
+        .feature-item {
+            width: 100%;
+        }
+        .slideshow-container, .slideshow-wine-container, .slideshow-peach-container, .slideshow-f-container, .slideshow-sp-container, .slideshow-pepper-container {
+        height: 400px;
+        }
+        .slide h1, .slide h2 {
+            font-size: 18px;
+        }
+        .feature-item img {
+            width: 100%;
+            height: auto;
+        }
+    }
     </style>
-       <script src="assets/js/typed.js"></script>
        <script>
         function filterProducts() {
             let input = document.getElementById('searchInput').value.toLowerCase();
@@ -190,6 +225,32 @@
                 }
             }
         }
+
+        function startSlideshow(containerClass, slideClass) {
+        let slides = document.querySelectorAll(`.${containerClass} .${slideClass}`);
+        let index = 0;
+
+            function showSlides() {
+                slides.forEach(slide => slide.classList.remove("active")); // Remove active class from all slides
+                slides[index].classList.add("active"); // Set active class on current slide
+                index = (index + 1) % slides.length;
+                setTimeout(showSlides, 2500);
+            }
+
+            if (slides.length > 0) { // Ensure slideshow exists before starting
+                slides[0].classList.add("active");
+                showSlides();
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            startSlideshow("slideshow-container", "slide");
+            startSlideshow("slideshow-wine-container", "slide-wine");
+            startSlideshow("slideshow-pepper-container", "slide-pepper");
+            startSlideshow("slideshow-sp-container", "slide-sp");
+            startSlideshow("slideshow-f-container", "slide-f");
+            startSlideshow("slideshow-peach-container", "slide-peach");
+        });
     </script>
 </head>
 <body>
@@ -209,7 +270,7 @@
         </nav>
     </header>
     <div class="slideshow-container">
-        <div class="slide" style="background-image: url('images/bg.jpg'); display: block;">
+        <div class="slide active" style="background-image: url('images/bg.jpg');">
             <h1>Frische Produkte direkt vom Bauern</h1>
         </div>
         <div class="slide" style="background-image: url('images/location.jpg');">
@@ -218,46 +279,37 @@
         </div>        
     </div>
     <section id="features" class="features">
-        <div class="feature-item">        
-            <img src="images/juice.jpg" alt="Wine">
-            <h3>Weine</h3>
-            <p>Edle Tropfen aus dem Burgenland</p>
-        </div>
         <div class="feature-item">
-            <img src="images/pepper.jpg" alt="Pepper">
-            <h3>Paprika</h3>
-            <p>Frische und aromatische Paprikasorten</p>
-        </div>
-        <div class="feature-item">
-            <img src="images/garlic.jpg" alt="Garlic">
-            <h3>Frischer Knoblauch</h3>
-            <p>Würziger Knoblauch direkt vom Feld</p>
-        </div>
-        <div class="feature-item">
-            <img src="images/tomatoes.jpg" alt="Tomatoes">
-            <h3>Unsere Stauden</h3>
-            <p>Saftige Paradeiser aus eigenem Anbau</p>
-        </div>
-        <div class="feature-item">
-            <img src="images/honey.jpg" alt="Honey">
-            <h3>Honig</h3>
-            <p>Reiner Honig von fleißigen Bienen</p>
-        </div>
-        <div class="feature-item">
-            <div class="slideshow-family-container">
-                <div class="slide-family" style="background-image: url('images/family.jpg'); display: block;">
-                    <h3>Unser Familienbetrieb</h3> 
+            <div class="slideshow-wine-container">
+                <div class="slide-wine" style="background-image: url('images/alcohol.jpg');">
+                    <h3>Regionale Schnäpse</h3> 
                 </div>
-                <div class="slide-family" style="background-image: url('images/tractor.jpg');">
-                    <h3>Unsere Landwirtschaft</h3>
-                </div>        
+                <div class="slide-wine" style="background-image: url('images/juice.jpg');">
+                    <h3>Heimische Weine</h3>
+                </div>
+                <div class="slide-wine" style="background-image: url('images/honey.jpg');">
+                    <h3>Hochwertiger Honig</h3>
+                </div>
+                <div class="slide-wine" style="background-image: url('images/location.jpg');">
+                    <h3>Unsere Standort</h3>
+                </div>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="slideshow-pepper-container">
+                <div class="slide-pepper" style="background-image: url('images/pepper.jpg');">
+                    <h3>Frischer Paprika</h3> 
+                </div>
+                <div class="slide-pepper" style="background-image: url('images/garlic.jpg');">
+                    <h3>Frischer Knoblauch</h3>
+                </div>
+                <div class="slide-pepper" style="background-image: url('images/tomatoes.jpg');">
+                    <h3>Frische Paradeiser</h3>
+                </div>               
             </div>
         </div>
         <div class="feature-item">
             <div class="slideshow-sp-container">
-                <div class="slide-sp" style="background-image: url('images/sp1.jpg'); display: block;">
-                    <h3>Heimische Fisolen</h3> 
-                </div>
                 <div class="slide-sp" style="background-image: url('images/sp4.jpg');">
                     <h3>Frischer Spargel</h3>
                 </div>
@@ -267,19 +319,27 @@
             </div>
         </div>
         <div class="feature-item">
-            <img src="images/alcohol.jpg" alt="Alcohol">
-            <h3>Schnaps</h3>
-            <p>Traditioneller Schnaps</p>
+            <div class="slideshow-f-container">
+                <div class="slide-f" style="background-image: url('images/sp1.jpg');">
+                    <h3>Heimische Fisolen</h3> 
+                </div>
+            </div>
         </div>
-        <div class="feature-item">
-            <img src="images/location.jpg" alt="Location">
-            <h3>Unser Stand</h3>
-            <p>Frische Produkte direkt vor Ort genießen</p>
-        </div>
-        <div class="feature-item">
-            <img src="images/quality.jpg" alt="Quality">
-            <h3>Feinste Qualität</h3>
-            <p>Beste Zutaten für höchste Ansprüche</p>
+        <div class="feature-peach">
+            <div class="slideshow-peach-container">
+                <div class="slide-peach" style="background-image: url('images/plumbs.jpg');">
+                    <h3>Heimische Fisolen</h3> 
+                </div>
+                <div class="slide-peach" style="background-image: url('images/peach1.jpg');">
+                    <h3>Heimische Fisolen</h3> 
+                </div>
+                <div class="slide-peach" style="background-image: url('images/peach2.jpg');">
+                    <h3>Heimische Fisolen</h3> 
+                </div>
+                <div class="slide-peach" style="background-image: url('images/quality.jpg');">
+                    <h3>Heimische Fisolen</h3> 
+                </div>
+            </div>
         </div>
     </section>
     <section id="imprint" class="imprint">
@@ -288,23 +348,5 @@
         <h2>Eisenstädterstraße 19, 7082 Donnerskirchen</h2>
         <h2><a href="tel:+436607707763">+43 (0) 660 7707763</a></h2>
     </section>
-    <script>
-         function startSlideshow(containerClass, slideClass) {
-            let index = 0;
-            function showSlides() {
-                let slides = document.querySelectorAll(`.${containerClass} .${slideClass}`);
-                slides.forEach(slide => slide.style.display = "none");
-                index++;
-                if (index > slides.length) { index = 1; }
-                slides[index - 1].style.display = "block";
-                setTimeout(showSlides, 2500);
-            }
-            showSlides();
-        }
-        
-        startSlideshow("slideshow-container", "slide");
-        startSlideshow("slideshow-family-container", "slide-family");
-        startSlideshow("slideshow-sp-container", "slide-sp");
-    </script>
 </body>
 </html>
